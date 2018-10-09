@@ -1,0 +1,12 @@
+
+  <div class="card" style="width: 18rem;">
+    <img class="card-img-top" [src]="pizza.url" >
+    <div class="card-body">
+      
+        <h3>{{pizza.name }}</h3>
+        <h5>{{pizza.price | currency:'EUR':'symbol':'':''}}</h5>
+    
+      <button class="btn btn-lg btn-primary">Voir</button>
+    </div>
+  </div>
+
