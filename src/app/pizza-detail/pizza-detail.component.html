@@ -1,8 +1,9 @@
 
+  <h1 class="mt-5">Détail</h1>
   <div class="jumbotron">
-    <img class="card-img-top top-img" [src]="pizza.url" alt="Card image cap">
     <h1 class="display-4">Nom : {{pizza.name }}</h1>
-    <p class="lead">Prix : {{pizza.price | currency:'EUR':'symbol':'':''}}</p>
+    <h3 class="lead">Prix : {{pizza.price | currency:'EUR':'symbol':'':''}}</h3>
+    <img class="card-img-top top-img" [src]="pizza.url" alt="Card image cap">
     <hr class="my-4">
     <button class="btn btn-lg btn-primary">Commander</button>
   </div>
