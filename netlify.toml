@@ -1,2 +1,4 @@
 [build]
-  functions = "./function"
+  functions = "./function_out"
+  # Default build command.
+  command = "ng build --prod && netlify-lambda build function"
