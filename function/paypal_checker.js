@@ -11,7 +11,7 @@ exports.handler = (event, context, callback) => {
 
     console.log('Verifying');
     console.log(body);
-    return null;
+    
     var options = {
         url: 'https://www.sandbox.paypal.com/cgi-bin/webscr',
         method: 'POST',
