@@ -21,7 +21,7 @@ exports.handler = (event, context, callback) => {
         body: body,
         strictSSL: true,
         rejectUnauthorized: false,
-        requestCert: true,
+        requestCert: true, 
         agent: false
     };
 
