@@ -30,31 +30,31 @@ exports.handler = (event, context, callback) => {
         statusCode: '200',
         body: ""
     });
-    
-    // //POST IPN data back to PayPal to validate
-    // request(options, function callback(error, response, body) {
-    //     if (!error && response.statusCode === 200) {
 
-    //         //Inspect IPN validation result and act accordingly
-    //         if (body.substring(0, 8) === 'VERIFIED') {
+    //POST IPN data back to PayPal to validate
+    request(options, function callback(error, response, body) {
+        if (!error && response.statusCode === 200) {
 
-    //             //The IPN is verified
-    //             console.log('Verified IPN!');
-    //         } else if (body.substring(0, 7) === 'INVALID') {
+            //Inspect IPN validation result and act accordingly
+            if (body.substring(0, 8) === 'VERIFIED') {
 
-    //             //The IPN invalid
-    //             console.log('Invalid IPN!');
-    //         } else {
-    //             //Unexpected response body
-    //             console.log('Unexpected response body!');
-    //             console.log(body);
-    //         }
-    //     }else{
-    //         //Unexpected response
-    //         console.log('Unexpected response!');
-    //         console.log(response);
-    //     }
+                //The IPN is verified
+                console.log('Verified IPN!');
+            } else if (body.substring(0, 7) === 'INVALID') {
 
-    // });
+                //The IPN invalid
+                console.log('Invalid IPN!');
+            } else {
+                //Unexpected response body
+                console.log('Unexpected response body!');
+                console.log(body);
+            }
+        }else{
+            //Unexpected response
+            console.log('Unexpected response!');
+            console.log(response);
+        }
+
+    });
 
 };
