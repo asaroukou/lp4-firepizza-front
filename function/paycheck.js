@@ -4,16 +4,16 @@ exports.handler = function(event, context, callback) {
   console.log('Received event:', JSON.stringify(event, null, 2));
 
   callback(null, {
-  statusCode: 200,
-  body: "Hello, World ca marche"
+    statusCode: 200,
+    body: "Hello, World ca marche"
   });
 
    //Read the IPN message sent from PayPal and prepend 'cmd=_notify-validate'
    var body = 'cmd=_notify-validate&' + event.body;
 
    console.log('Verifying');
-   console.log(body);
-
+   //console.log(body);
+   console.log(querystring.parse(body));
    var options = {
        url: 'https://ipnpb.sandbox.paypal.com/cgi-bin/webscr',
        method: 'POST',
@@ -36,7 +36,7 @@ exports.handler = function(event, context, callback) {
 
                //The IPN is verified
                console.log('Verified IPN!');
-               console.log(querystring.parse(body))
+               
            } else if (body.substring(0, 7) === 'INVALID') {
 
                //The IPN invalid
