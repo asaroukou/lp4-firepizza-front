@@ -1,1 +1,54 @@
-!function(e,o){for(var n in o)e[n]=o[n]}(exports,function(e){var o={};function n(t){if(o[t])return o[t].exports;var r=o[t]={i:t,l:!1,exports:{}};return e[t].call(r.exports,r,r.exports,n),r.l=!0,r.exports}return n.m=e,n.c=o,n.d=function(e,o,t){n.o(e,o)||Object.defineProperty(e,o,{configurable:!1,enumerable:!0,get:t})},n.r=function(e){Object.defineProperty(e,"__esModule",{value:!0})},n.n=function(e){var o=e&&e.__esModule?function(){return e.default}:function(){return e};return n.d(o,"a",o),o},n.o=function(e,o){return Object.prototype.hasOwnProperty.call(e,o)},n.p="",n(n.s=0)}([function(e,o,n){"use strict";o.handler=function(e,o,n){console.log("Received event:",JSON.stringify(e,null,2)),n(null,{statusCode:"200"});var t="cmd=_notify-validate&"+e.body;console.log("Verifying"),console.log(t),request({url:"https://www.sandbox.paypal.com/cgi-bin/webscr",method:"POST",headers:{Connection:"close"},body:t,strictSSL:!0,rejectUnauthorized:!1,requestCert:!0,agent:!1},function(e,o,n){e||200!==o.statusCode?(console.log("Unexpected response!"),console.log(o)):"VERIFIED"===n.substring(0,8)?console.log("Verified IPN!"):"INVALID"===n.substring(0,7)?console.log("Invalid IPN!"):(console.log("Unexpected response body!"),console.log(n))})}}]));
+exports.handler = (event, context, callback) => {
+    console.log('Received event:', JSON.stringify(event, null, 2));
+
+    //Return 200 to caller
+    callback(null, {
+        statusCode: '200'
+    });
+
+    //Read the IPN message sent from PayPal and prepend 'cmd=_notify-validate'
+    var body = 'cmd=_notify-validate&' + event.body;
+
+    console.log('Verifying');
+    console.log(body);
+
+    var options = {
+        url: 'https://www.sandbox.paypal.com/cgi-bin/webscr',
+        method: 'POST',
+        headers: {
+            'Connection': 'close'
+        },
+        body: body,
+        strictSSL: true,
+        rejectUnauthorized: false,
+        requestCert: true,
+        agent: false
+    };
+
+    //POST IPN data back to PayPal to validate
+    request(options, function callback(error, response, body) {
+        if (!error && response.statusCode === 200) {
+
+            //Inspect IPN validation result and act accordingly
+            if (body.substring(0, 8) === 'VERIFIED') {
+
+                //The IPN is verified
+                console.log('Verified IPN!');
+            } else if (body.substring(0, 7) === 'INVALID') {
+
+                //The IPN invalid
+                console.log('Invalid IPN!');
+            } else {
+                //Unexpected response body
+                console.log('Unexpected response body!');
+                console.log(body);
+            }
+        }else{
+            //Unexpected response
+            console.log('Unexpected response!');
+            console.log(response);
+        }
+
+    });
+
+};
