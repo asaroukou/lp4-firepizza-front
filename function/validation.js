@@ -4,11 +4,7 @@ exports.handler = (event, context, callback) => {
     console.log("hi request");
     console.log('Received event:', JSON.stringify(event, null, 2));
 
-    //Return 200 to caller
-    callback(null, {
-        statusCode: '200',
-        body: ""
-    });
+   
 
     //Read the IPN message sent from PayPal and prepend 'cmd=_notify-validate'
     var body = 'cmd=_notify-validate&' + event.body;
@@ -29,6 +25,12 @@ exports.handler = (event, context, callback) => {
         agent: false
     };
 
+     //Return 200 to caller
+     callback(null, {
+        statusCode: '200',
+        body: ""
+    });
+    
     // //POST IPN data back to PayPal to validate
     // request(options, function callback(error, response, body) {
     //     if (!error && response.statusCode === 200) {
