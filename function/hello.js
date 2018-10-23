@@ -1,5 +1,5 @@
 exports.handler = (event, context, callback) => {
     
-    console.log("hello");
+    console.log(event, context);
 
 };
